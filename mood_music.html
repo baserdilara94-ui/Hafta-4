@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoodMusic 🎧 - Moduna Göre Müzik</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-strong: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --accent: #ff4757;
+            --text: #ffffff;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-attachment: fixed;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text);
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 3.5rem;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #ffffff, rgba(255,255,255,0.8));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        /* Mood Selector */
+        .mood-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .mood-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 16px 32px;
+            border-radius: 100px;
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .mood-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .mood-btn.active {
+            background: #ffffff;
+            color: #1a1a1a;
+            transform: scale(1.08);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+            border-color: #ffffff;
+        }
+
+        /* Playlist Section */
+        .playlist-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .playlist-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .song-card {
+            background: var(--glass-strong);
+            padding: 24px 32px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .song-card:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(10px);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .song-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .song-emoji {
+            font-size: 1.8rem;
+            background: rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+        }
+
+        .song-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .song-artist {
+            font-size: 1rem;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .listen-btn {
+            background: #ff0000; /* YouTube Red */
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .song-card:hover .listen-btn {
+            background: #ffffff;
+            color: #ff0000;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+        }
+
+        .youtube-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 2.5rem; }
+            .song-card { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .listen-btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>MoodMusic 🎧</h1>
+            <div class="subtitle">Modunu seç, en iyi şarkıları YouTube'da dinle!</div>
+        </header>
+
+        <div class="mood-selector" id="mood-selector">
+            <!-- Mood buttons -->
+        </div>
+
+        <div class="playlist-wrapper">
+            <div class="playlist-title" id="current-mood-label">🎵 Playlist</div>
+            <div id="playlist">
+                <!-- Songs -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const musicData = {
+            'mutlu': {
+                name: 'Mutlu',
+                emoji: '😃',
+                gradient: 'linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)',
+                songs: [
+                    { title: "Happy", artist: "Pharrell Williams", id: "y6Sxv-sUYtM" },
+                    { title: "Can't Stop the Feeling!", artist: "Justin Timberlake", id: "ru0K8uYEZWw" },
+                    { title: "Walking On Sunshine", artist: "Katrina & The Waves", id: "iPUmE-tne5U" },
+                    { title: "Dancing Queen", artist: "ABBA", id: "xFrGuyw1V8s" },
+                    { title: "Uptown Funk", artist: "Mark Ronson ft. Bruno Mars", id: "OPf0YbXqDm0" }
+                ]
+            },
+            'uzgun': {
+                name: 'Üzgün',
+                emoji: '😢',
+                gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                songs: [
+                    { title: "Someone Like You", artist: "Adele", id: "hLQl3WQQoQ0" },
+                    { title: "Fix You", artist: "Coldplay", id: "k4V3Mo61fJM" },
+                    { title: "Someone You Loved", artist: "Lewis Capaldi", id: "zABLecsR5UE" },
+                    { title: "when the party's over", artist: "Billie Eilish", id: "pbMwTqkKSps" },
+                    { title: "Photograph", artist: "Ed Sheeran", id: "nSDgHBxUbVQ" }
+                ]
+            },
+            'enerjik': {
+                name: 'Enerjik',
+                emoji: '⚡',
+                gradient: 'linear-gradient(135deg, #f83600 0%, #f9d423 100%)',
+                songs: [
+                    { title: "Lose Yourself", artist: "Eminem", id: "xFYQQPAOz7Y" },
+                    { title: "Eye of the Tiger", artist: "Survivor", id: "btPJPFnesV4" },
+                    { title: "Don't Stop Me Now", artist: "Queen", id: "HgzGwKwLmgM" },
+                    { title: "I Gotta Feeling", artist: "The Black Eyed Peas", id: "uSD4vsh1zDA" },
+                    { title: "Thunderstruck", artist: "AC/DC", id: "n_GFN3a0yj0" }
+                ]
+            },
+            'rahat': {
+                name: 'Rahat',
+                emoji: '🧘',
+                gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                songs: [
+                    { title: "Don't Know Why", artist: "Norah Jones", id: "tO4dxvguQDk" },
+                    { title: "Only Time", artist: "Enya", id: "7wfYIMyS_dI" },
+                    { title: "Better Together", artist: "Jack Johnson", id: "fqxNYjDFJUk" },
+                    { title: "Sparks", artist: "Coldplay", id: "Ar48yzjn1PE" },
+                    { title: "Gravity", artist: "John Mayer", id: "Fo4746XZgw8" }
+                ]
+            },
+            'odaklanmis': {
+                name: 'Odaklanmış',
+                emoji: '🧠',
+                gradient: 'linear-gradient(135deg, #09203f 0%, #537895 100%)',
+                songs: [
+                    { title: "lofi hip hop radio", artist: "Lofi Girl", id: "-FlxM_0S2lA" },
+                    { title: "Time", artist: "Hans Zimmer", id: "c56t7upa8Bk" },
+                    { title: "Nuvole Bianche", artist: "Ludovico Einaudi", id: "sR2W2scFS4Y" },
+                    { title: "Sonata No. 11", artist: "Mozart", id: "FZ1mj9IaczQ" },
+                    { title: "An Ending (Ascent)", artist: "Brian Eno", id: "OlaTeXX3uH8" }
+                ]
+            }
+        };
+
+        const moodSelector = document.getElementById('mood-selector');
+        const playlist = document.getElementById('playlist');
+        const moodLabel = document.getElementById('current-mood-label');
+
+        let currentMoodId = 'mutlu';
+
+        function init() {
+            Object.keys(musicData).forEach(moodKey => {
+                const data = musicData[moodKey];
+                const btn = document.createElement('button');
+                btn.className = `mood-btn ${moodKey === currentMoodId ? 'active' : ''}`;
+                btn.innerHTML = `${data.emoji} ${data.name}`;
+                btn.onclick = () => selectMood(moodKey);
+                moodSelector.appendChild(btn);
+            });
+
+            selectMood(currentMoodId);
+        }
+
+        function selectMood(moodKey) {
+            currentMoodId = moodKey;
+            const data = musicData[moodKey];
+            
+            // Buttons
+            document.querySelectorAll('.mood-btn').forEach((btn, i) => {
+                const key = Object.keys(musicData)[i];
+                if(key === moodKey) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            // BG & UI
+            document.body.style.background = data.gradient;
+            moodLabel.innerHTML = `🎵 ${data.name} Playlisti`;
+
+            // List
+            playlist.innerHTML = '';
+            data.songs.forEach(song => {
+                const card = document.createElement('a');
+                card.className = 'song-card';
+                card.href = `https://www.youtube.com/watch?v=${song.id}`;
+                card.target = '_blank';
+                
+                card.innerHTML = `
+                    <div class="song-main">
+                        <div class="song-emoji">🎵</div>
+                        <div class="song-info">
+                            <div class="song-title">${song.title}</div>
+                            <div class="song-artist">${song.artist}</div>
+                        </div>
+                    </div>
+                    <div class="listen-btn">
+                        <svg class="youtube-icon" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                        YouTube'da Dinle
+                    </div>
+                `;
+                playlist.appendChild(card);
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

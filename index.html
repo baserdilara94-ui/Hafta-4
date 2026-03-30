@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geliştirici Portfolyosu</title>
+    <link rel="stylesheet" href="portfolio.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <!-- Mouse effect canvas -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Floating Particles Container (Bottom to Top) -->
+    <div id="particles-container"></div>
+
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Glassmorphism Card -->
+        <main class="glass-card">
+            
+            <!-- Circular Profile Picture -->
+            <div class="profile-container">
+                <div class="glow-ring"></div>
+                <!-- Path to the image in the newly created folder -->
+                <img src="github_profile.png" alt="Profil Fotoğrafı" class="profile-img">
+            </div>
+
+            <div class="header-text">
+                <h1>Dijital Portfolyoma <span class="highlight">Hoş Geldiniz</span></h1>
+                <p>Aşağıdaki projeleri ve veri seti çalışmalarımı inceleyebilirsiniz.</p>
+            </div>
+
+            <!-- Links Section (Görev Yönergelerine göre) -->
+            <nav class="project-links">
+                <!-- Task 2 (Mood Music) -->
+                <a href="mood_music.html" class="glass-btn primary-btn">
+                    <i class='bx bx-music' ></i>
+                    <div class="btn-text">
+                        <span>Mood Music Uygulaması</span>
+                        <small>Uygulamaya Git</small>
+                    </div>
+                </a>
+
+                <!-- Task 7 (Graphics) -->
+                <a href="Figure_1.png" class="glass-btn secondary-btn" target="_blank">
+                    <i class='bx bx-bar-chart-alt-2'></i>
+                    <div class="btn-text">
+                        <span>Tıbbi İstatistik Grafikleri</span>
+                        <small>Görsel İstatistiklere Git</small>
+                    </div>
+                </a>
+
+                <!-- Task 7 (CSV Dataset) -->
+                <a href="veri.csv" class="glass-btn data-btn" download>
+                    <i class='bx bxs-file-export' ></i>
+                    <div class="btn-text">
+                        <span>Sentetik Veri Seti (CSV)</span>
+                        <small>Ham Veriyi İndir</small>
+                    </div>
+                </a>
+                
+
+            </nav>
+            
+            <footer class="social-footer">
+                <a href="https://github.com/baserdilara94-ui" target="_blank" class="social-icon"><i class='bx bxl-github'></i></a>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Mouse Tracking and Particle Effects -->
+    <script src="portfolio.js"></script>
+</body>
+</html>
